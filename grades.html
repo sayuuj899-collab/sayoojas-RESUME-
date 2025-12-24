@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Grades Dashboard</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins', sans-serif;
+}
+
+/* ===== BACKGROUND ===== */
+body{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:radial-gradient(circle at top,#0f2027,#000);
+    color:white;
+}
+
+/* ===== DASHBOARD CARD ===== */
+.dashboard{
+    width:520px;
+    padding:30px;
+    border-radius:20px;
+    background:rgba(255,255,255,0.08);
+    backdrop-filter:blur(14px);
+    box-shadow:
+        0 0 25px rgba(0,255,255,0.3),
+        0 0 60px rgba(0,255,255,0.2);
+    animation:fadeIn 1.2s ease;
+}
+
+/* ===== TITLE ===== */
+h2{
+    text-align:center;
+    margin-bottom:20px;
+    letter-spacing:2px;
+    text-shadow:0 0 15px cyan;
+}
+
+/* ===== STATS ===== */
+.stats{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:15px;
+}
+
+.stat{
+    background:rgba(0,0,0,0.4);
+    padding:10px 15px;
+    border-radius:12px;
+    box-shadow:0 0 15px rgba(0,255,255,0.5);
+    font-size:14px;
+}
+
+/* ===== CANVAS ===== */
+canvas{
+    width:100%;
+    margin-top:20px;
+    background:rgba(0,0,0,0.3);
+    border-radius:15px;
+    box-shadow:0 0 25px rgba(0,255,255,0.6);
+}
+
+/* ===== ANIMATION ===== */
+@keyframes fadeIn{
+    from{opacity:0; transform:translateY(25px);}
+    to{opacity:1; transform:translateY(0);}
+}
+</style>
+</head>
+
+<body>
+
+<div class="dashboard">
+    <h2>📊 Academic Performance</h2>
+
+    <div class="stats">
+        <div class="stat">Sem 1: 8.82</div>
+        <div class="stat">Sem 2: 9.20</div>
+        <div class="stat">Sem 3: 9.05</div>
+        <div class="stat">Sem 4: 8.52</div>
+    </div>
+
+    <canvas id="gradeChart" height="260"></canvas>
+</div>
+
+<script>
+const canvas = document.getElementById("gradeChart");
+const ctx = canvas.getContext("2d");
+
+const grades = [8.82, 9.2, 9.05, 8.52];
+const labels = ["Sem 1", "Sem 2", "Sem 3", "Sem 4"];
+
+const padding = 40;
+const maxGrade = 10;
+
+// Glow settings
+ctx.shadowColor = "cyan";
+ctx.shadowBlur = 15;
+
+// Draw axes
+ctx.strokeStyle = "cyan";
+ctx.lineWidth = 2;
+ctx.beginPath();
+ctx.moveTo(padding, padding);
+ctx.lineTo(padding, canvas.height - padding);
+ctx.lineTo(canvas.width - padding, canvas.height - padding);
+ctx.stroke();
+
+// Plot graph
+ctx.beginPath();
+grades.forEach((g, i) => {
+    const x = padding + (i * (canvas.width - 2 * padding) / (grades.length - 1));
+    const y = canvas.height - padding - (g / maxGrade) * (canvas.height - 2 * padding);
+    if(i === 0) ctx.moveTo(x, y);
+    else ctx.lineTo(x, y);
+});
+ctx.strokeStyle = "#00ffff";
+ctx.lineWidth = 3;
+ctx.stroke();
+
+// Draw points
+grades.forEach((g, i) => {
+    const x = padding + (i * (canvas.width - 2 * padding) / (grades.length - 1));
+    const y = canvas.height - padding - (g / maxGrade) * (canvas.height - 2 * padding);
+    ctx.beginPath();
+    ctx.arc(x, y, 6, 0, Math.PI * 2);
+    ctx.fillStyle = "#00ffff";
+    ctx.fill();
+});
+
+// Labels
+ctx.shadowBlur = 0;
+ctx.fillStyle = "white";
+ctx.font = "14px Poppins";
+labels.forEach((label, i) => {
+    const x = padding + (i * (canvas.width - 2 * padding) / (labels.length - 1));
+    ctx.fillText(label, x - 18, canvas.height - 10);
+});
+</script>
+
+</body>
+</html>

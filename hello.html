@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>SAYOOJ - PERSONAL WEBPAGE</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins', sans-serif;
+}
+
+body{
+    height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+    transition:0.5s;
+}
+
+/* LIGHT MODE */
+body.light{
+    background:linear-gradient(135deg,#fdfbfb,#ebedee);
+}
+
+/* GLASS CONTAINER */
+.container{
+    text-align:center;
+    padding:50px 60px;
+    border-radius:20px;
+    background:rgba(255,255,255,0.15);
+    backdrop-filter:blur(12px);
+    box-shadow:0 20px 40px rgba(0,0,0,0.4);
+    animation:fadeIn 1.2s ease;
+}
+
+body.light .container{
+    background:rgba(255,255,255,0.6);
+}
+
+/* HEADING */
+h1{
+    color:white;
+    font-size:36px;
+    letter-spacing:2px;
+    margin-bottom:30px;
+    text-shadow:0 0 15px rgba(255,255,255,0.4);
+}
+
+body.light h1{
+    color:#222;
+}
+
+/* BUTTONS */
+button{
+    padding:15px 40px;
+    font-size:18px;
+    font-weight:600;
+    border:none;
+    border-radius:50px;
+    cursor:pointer;
+    color:white;
+    background:linear-gradient(90deg,#ff512f,#dd2476);
+    box-shadow:0 0 20px rgba(255,81,47,0.8);
+    transition:0.4s ease;
+    position:relative;
+    overflow:hidden;
+    margin:10px;
+}
+
+button:hover{
+    transform:scale(1.1);
+    box-shadow:0 0 35px rgba(255,81,47,1);
+}
+
+/* TOGGLE BUTTON */
+.toggle{
+    background:linear-gradient(90deg,#36d1dc,#5b86e5);
+    box-shadow:0 0 15px rgba(91,134,229,0.9);
+}
+
+/* ANIMATION */
+@keyframes fadeIn{
+    from{opacity:0; transform:translateY(30px);}
+    to{opacity:1; transform:translateY(0);}
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>SAYOOJ’S PERSONAL SPACE</h1>
+
+    <button onclick="startSite()">Start Here</button><br>
+    <button class="toggle" onclick="toggleMode()">🌙 Toggle Mode</button>
+</div>
+
+<!-- Background Music -->
+<audio id="bgMusic" loop>
+    <source src="music.mp3" type="audio/mp3">
+</audio>
+
+<script>
+function startSite(){
+    document.getElementById("bgMusic").play();
+    setTimeout(() => {
+        window.location.href = "first.html";
+    }, 800);
+}
+
+function toggleMode(){
+    document.body.classList.toggle("light");
+}
+</script>
+
+</body>
+</html>
